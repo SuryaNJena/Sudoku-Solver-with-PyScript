@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <title>Sudoku Solver</title>
+    <py-env>
+      - numpy
+    </py-env>
+    <style>
+      table {
+	  margin:1em auto;
+      }
+      td {
+	  height:30px;
+	  width:30px;
+	  text-align:center;
+	  display: block;
+	  float: left;
+	  border: 1px solid black;
+	  font-size: 30px;
+      }
+      td:first-child {
+	  border-left:solid;
+      }
+      td:nth-child(3n) {
+	  border-right:solid ;
+      }
+      tr:first-child {
+	  border-top:solid;
+      }
+      tr:nth-child(3n) td {
+	  border-bottom:solid ;
+      }
+      input {
+	  display: block;
+	  float: left;
+	  border: 1px black;
+	  width: 25px;
+	  height: 25px;
+	  text-align: center;
+	  font-size: 22px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <center>
+      <h1 style="font-family: sans-serif; font-size:2em">Sudoku Solver</h1>
+      <table id="grid">
+	<caption>Enter the sudoku puzzle below.</caption>
+	<tr>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	</tr>
+	<tr>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	</tr>
+	<tr>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	</tr>
+	<tr>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	</tr>
+	<tr>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	</tr>
+	<tr>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	</tr>
+	<tr>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	</tr>
+	<tr>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	</tr>
+	<tr>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
+	</tr>
+      </table>
+      <button style="border: 2px solid black; background-color: white;  color: black; padding: 14px 28px; font-size: 1em; cursor: pointer;" id="submit-button" type="submit" pys-onClick="input_solve"><b>SOLVE IT!</b></button>
+
+      <center>
+  </body>
+
+  <py-script>
+    import numpy as np
+    from js import document
+
+    grid_vals = np.zeros((9,9))
+    puzzle_backup = np.zeros((9,9))
+    def input_solve(*args, **kwargs):
+      trs = document.getElementsByTagName('tr')
+      for r in range(trs.length):
+        tds = trs[r].getElementsByTagName('td')
+        for c in range(tds.length):
+          value = tds[c].getElementsByTagName('input')[0].value
+          if value.isdigit():
+            grid_vals[r,c] = int(value)
+            puzzle_backup[r,c] = int(value)
+          else:
+            grid_vals[r,c] = 0
+            puzzle_backup[r,c] = 0
+      print("LOADED GRID == ",grid_vals)
+
+      solve()
+
+    # Code from Computerphile video - https://www.youtube.com/watch?v=G_UYXzGuqvM
+    def possible(y,x,n):
+      global grid_vals
+      for i in range(0,9):
+        if grid_vals[y,i] == n:
+          return False
+      for i in range(0,9):
+        if grid_vals[i,x] == n:
+          return False
+      x0 = (x//3)*3
+      y0 = (y//3)*3
+      for i in range(0,3):
+        for j in range(0,3):
+          if grid_vals[y0+i,x0+j] == n:
+            return False
+      return True
+
+    def solve():
+      print("SOLVING>>>>>")
+      for y in range(9):
+        for x in range(9):
+          if grid_vals[y,x] == 0:
+            for n in range(1,10):
+              if(possible(y,x,n)):
+                grid_vals[y,x] = n
+                solve()
+                grid_vals[y,x] = 0
+            return
+      print("SOLVED >>>>>>>",grid_vals)
+      print("Original Puzzle",puzzle_backup)
+      trs = document.getElementsByTagName('tr')
+      for r in range(trs.length):
+        tds = trs[r].getElementsByTagName('td')
+        for c in range(tds.length):
+          if puzzle_backup[r,c] == 0:
+            tds[c].getElementsByTagName('input')[0].style.color = "blue"
+            tds[c].getElementsByTagName('input')[0].value = grid_vals[r,c]
+          else:
+            tds[c].getElementsByTagName('input')[0].style.color = "black"
+            tds[c].getElementsByTagName('input')[0].value = grid_vals[r,c]
+      print("Loaded to Display Grid")
+      exit()
+  </py-script>
+</html>
