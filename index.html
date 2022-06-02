@@ -150,6 +150,8 @@
 	  <td><input type="text" maxlength="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 49 && event.charCode <= 57))"/>  </td>
 	</tr>
       </table>
+
+      <div id="status"></div>
       <button style="border: 2px solid black; background-color: white;  color: black; padding: 14px 28px; font-size: 1em; cursor: pointer;" id="submit-button" type="submit" pys-onClick="input_solve"><b>SOLVE IT!</b></button>
 
       <center>
@@ -194,8 +196,35 @@
             return False
       return True
 
+    def isValidSudoku(board: list[list[str]]) -> bool:
+    for row in range(9):
+        for col in range(9):
+            if board[row][col] != ".":
+                for i_col in range(9):
+                    if board[row][col] == board[row][i_col] and col!=i_col:
+                        return False
+                for i_row in range(9):
+
+                    if board[row][col] == board[i_row][col] and row!=i_row:
+                        return False
+
+                r_sub = (row//3)*3
+                c_sub = (col//3)*3
+
+                for add_row in range(3):
+                    for add_col in range(3):
+                        if board[r_sub+add_row][c_sub+add_col] ==  board[row][col] and (r_sub+add_row)!=row and (c_sub+add_col)!=col:
+                            return False
+    return True
+
     def solve():
+      if isValidSudoku(grid_vals):
+        pass
+      else:
+        pyscript.write("status", "Invalid Board")
+        exit()
       print("SOLVING>>>>>")
+      pyscript.write("status", "SOLVING BOARD")
       for y in range(9):
         for x in range(9):
           if grid_vals[y,x] == 0:
@@ -206,6 +235,7 @@
                 grid_vals[y,x] = 0
             return
       print("SOLVED >>>>>>>",grid_vals)
+      pyscript.write("status", "SOLVED BOARD")
       print("Original Puzzle",puzzle_backup)
       trs = document.getElementsByTagName('tr')
       for r in range(trs.length):
