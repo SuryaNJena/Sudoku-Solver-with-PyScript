@@ -197,25 +197,25 @@
       return True
 
     def isValidSudoku(board: list[list[str]]) -> bool:
-    for row in range(9):
+      for row in range(9):
         for col in range(9):
-            if board[row][col] != ".":
-                for i_col in range(9):
-                    if board[row][col] == board[row][i_col] and col!=i_col:
-                        return False
-                for i_row in range(9):
+          if board[row][col] != 0:
+            for i_col in range(9):
+              if board[row][col] == board[row][i_col] and col!=i_col:
+                return False
 
-                    if board[row][col] == board[i_row][col] and row!=i_row:
-                        return False
+            for i_row in range(9):
+              if board[row][col] == board[i_row][col] and row!=i_row:
+                return False
 
-                r_sub = (row//3)*3
-                c_sub = (col//3)*3
+            r_sub = (row//3)*3
+            c_sub = (col//3)*3
 
-                for add_row in range(3):
-                    for add_col in range(3):
-                        if board[r_sub+add_row][c_sub+add_col] ==  board[row][col] and (r_sub+add_row)!=row and (c_sub+add_col)!=col:
-                            return False
-    return True
+            for add_row in range(3):
+              for add_col in range(3):
+                if board[r_sub+add_row][c_sub+add_col] ==  board[row][col] and (r_sub+add_row)!=row and (c_sub+add_col)!=col:
+                  return False
+      return True
 
     def solve():
       if isValidSudoku(grid_vals):
